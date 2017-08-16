@@ -86,6 +86,7 @@ minetest.register_entity("bow:arrow_ent", {
 				end
 			end
 		end
+		if not self.start_timer then self.start_timer = 0 end
 		if self.start_timer<=0.1 then
 			self.start_timer=self.start_timer+dtime
 		end
