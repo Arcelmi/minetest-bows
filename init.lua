@@ -14,6 +14,7 @@ minetest.register_tool("bow:bow_1", {
 	description = "Bow",
 	inventory_image = "bow_1.png",
 	wield_scale = {x=2, y=2, z=1},
+	groups = {not_in_creative_inventory=1},
 	on_drop = function(itemstack, dropper, pos)
 		itemstack:set_name("bow:bow_dropped")
 		minetest.item_drop(itemstack, dropper, pos)
@@ -26,6 +27,7 @@ minetest.register_tool("bow:bow_2", {
 	description = "Bow",
 	inventory_image = "bow_2.png",
 	wield_scale = {x=2, y=2, z=1},
+	groups = {not_in_creative_inventory=1},
 	on_drop = function(itemstack, dropper, pos)
 		itemstack:set_name("bow:bow_dropped")
 		minetest.item_drop(itemstack, dropper, pos)
@@ -38,6 +40,7 @@ minetest.register_tool("bow:bow_3", {
 	description = "Bow",
 	inventory_image = "bow_3.png",
 	wield_scale = {x=2, y=2, z=1},
+	groups = {not_in_creative_inventory=1},
 	on_drop = function(itemstack, dropper, pos)
 		itemstack:set_name("bow:bow_dropped")
 		minetest.item_drop(itemstack, dropper, pos)
@@ -87,6 +90,7 @@ minetest.register_entity("bow:arrow_ent", {
 			end
 		end
 		if not self.start_timer then self.start_timer = 0 end
+		if not self.charge then self.charge = 0 end
 		if self.start_timer<=0.1 then
 			self.start_timer=self.start_timer+dtime
 		end
