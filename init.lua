@@ -169,3 +169,21 @@ minetest.register_globalstep(function(dtime)
 		end
 	end
 end)
+
+minetest.register_craft({
+	output = "bow:bow",
+	recipe = {
+		{"", "default:stick", "farming:cotton"},
+		{"default:stick", "", "farming:cotton"},
+		{"", "default:stick", "farming:cotton"},
+	}
+})
+
+minetest.register_craft({
+	output = "bow:arrow",
+	recipe = {
+		{"default:flint"},
+		{"default:stick"},
+		{"default:paper"},
+	}
+})
