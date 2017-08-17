@@ -132,8 +132,8 @@ minetest.register_globalstep(function(dtime)
 			elseif wielditem:get_name()=="bow:bow_3" then
 				charge = 3
 			end
-			obj:setvelocity({x=dir.x*charge*5, y=dir.y*charge*5, z=dir.z*charge*5})
-			obj:setacceleration({x=0, y=-2, z=0})
+			obj:setvelocity({x=dir.x*charge*18,055566667, y=dir.y*charge*18,055566667, z=dir.z*charge*18,055566667})
+			obj:setacceleration({x=0, y=-9.81, z=0})
 			obj:get_luaentity().charge = charge
 			obj:get_luaentity().player = player
 			obj:get_luaentity().start_timer = 0
