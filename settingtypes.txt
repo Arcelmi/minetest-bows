@@ -1,0 +1,5 @@
+#Sets the full bow charging time in seconds
+bow_full_charge_time (Bow charge time) string 3
+
+#Sets the lifetime in seconds, after the arrow touches the ground or a wall
+bow_lifetime_arrow (Arrow Lifetime) string 60
