@@ -1,3 +1,17 @@
+local gravity = -9.81
+if minetest.settings:get("movement_gravity") then
+	gravity = minetest.settings:get("movement_gravity")*-1
+end
+local charge_speed = 1
+if minetest.settings:get("bow_full_charge_time") then
+	charge_speed = tonumber(minetest.settings:get("bow_full_charge_time"))/3
+end
+local arrow_lifetime = 60
+if minetest.settings:get("bow_lifetime_arrow") then
+	arrow_lifetime = tonumber(minetest.settings:get("bow_lifetime_arrow"))
+end
+	
+
 minetest.register_tool("bow:bow", {
 	description = "Bow",
 	inventory_image = "bow_inv.png",
@@ -69,14 +83,16 @@ minetest.register_entity("bow:arrow_ent", {
     collisionbox = {-0.1,-0.1,-0.1, 0.1,0.1,0.1},
 	textures = {"bow_arrow_uv.png"},
 	on_step = function(self, dtime)
+		if not self.start_timer then self.object:remove() return end
+		if not self.charge then self.object:remove() return end
 		local pos = self.object:getpos()
-		if minetest.registered_nodes[minetest.get_node(pos).name].walkable and minetest.registered_nodes[minetest.get_node(pos).name].drawtype~="nodebox" then
+		if minetest.registered_nodes[minetest.get_node(pos).name] and minetest.registered_nodes[minetest.get_node(pos).name].walkable and minetest.registered_nodes[minetest.get_node(pos).name].drawtype~="nodebox" and self.charge>0 then
 			self.object:setvelocity({x=0, y=0, z=0})
 			self.object:setacceleration({x=0, y=0, z=0})
 			self.charge = 0
 			self.timer = 0
 		end
-		if self.charge==0 and self.timer>=60 then
+		if self.charge==0 and self.timer>=arrow_lifetime then
 			self.object:remove()
 		elseif self.charge==0 then
 			self.timer = self.timer+dtime
@@ -89,8 +105,6 @@ minetest.register_entity("bow:arrow_ent", {
 				end
 			end
 		end
-		if not self.start_timer then self.object:remove() return end
-		if not self.charge then self.object:remove() return end
 		if self.start_timer<=0.1 then
 			self.start_timer=self.start_timer+dtime
 		end
@@ -133,7 +147,7 @@ minetest.register_globalstep(function(dtime)
 				charge = 3
 			end
 			obj:setvelocity({x=dir.x*charge*18,055566667, y=dir.y*charge*18,055566667, z=dir.z*charge*18,055566667})
-			obj:setacceleration({x=0, y=-9.81, z=0})
+			obj:setacceleration({x=0, y=gravity, z=0})
 			obj:get_luaentity().charge = charge
 			obj:get_luaentity().player = player
 			obj:get_luaentity().start_timer = 0
@@ -157,7 +171,7 @@ minetest.register_globalstep(function(dtime)
 			player:set_physics_override({jump=1, gravity=1, speed=1})
 			bow_load[player:get_player_name()]=false
 		end 
-		if timer>=1 then
+		if timer>=charge_speed then
 			wielditem = player:get_wielded_item()
 			timer=0
 			if wielditem:get_name()=="bow:bow" and controls.RMB and inv:contains_item("main", "bow:arrow") then
