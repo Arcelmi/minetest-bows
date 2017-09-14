@@ -148,7 +148,7 @@ controls.register_on_release(function(player, key, time)
 		obj:get_luaentity().player = player
 		obj:get_luaentity().start_timer = 0
 		obj:get_luaentity().start_vel = {x=dir.x*charge*18,055566667, y=dir.y*charge*18,055566667, z=dir.z*charge*18,055566667}
-		player:set_physics_override({jump=1, gravity=1, speed=1})
+		player:set_physics_override({speed=1})
 		wielditem:set_name("bow:bow")
 		wielditem:add_wear(charge*100)
 		player:set_wielded_item(wielditem)
@@ -163,7 +163,7 @@ controls.register_on_hold(function(player, key, time)
 	local inv = minetest.get_inventory({type="player", name=player:get_player_name()})
 	local wielditem = player:get_wielded_item()
 	if wielditem:get_name()=="bow:bow" and inv:contains_item("main", "bow:arrow") then
-		player:set_physics_override({jump=0.5, gravity=0.25, speed=0.25})
+		player:set_physics_override({speed=0.25})
 		wielditem:set_name("bow:bow_1")
 		bow_load[player:get_player_name()]=os.clock()
 	elseif wielditem:get_name()=="bow:bow_1" and os.clock()-bow_load[player:get_player_name()]>charge_speed then
@@ -194,7 +194,7 @@ minetest.register_globalstep(function(dtime)
 				end
 			end
 			inv:set_list("main", list)
-			player:set_physics_override({jump=1, gravity=1, speed=1})
+			player:set_physics_override({speed=1})
 			player:set_eye_offset({x=0,y=0,z=0},{x=0,y=0,z=0})
 			bow_load[player:get_player_name()]=false
 		end
