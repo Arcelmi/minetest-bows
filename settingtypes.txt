@@ -1,5 +1,5 @@
-#Sets the full bow charging time in seconds
-bow_full_charge_time (Bow charge time) string 3
+#Changes the full charge time of a bow.
+bow_full_charge_time (Bow Charge time) int 2
 
-#Sets the lifetime in seconds, after the arrow touches the ground or a wall
-bow_lifetime_arrow (Arrow Lifetime) string 60
+#Changes the lifetime of a landed arrow
+bow_lifetime_arrow (Arrow Lifetime) int 60
