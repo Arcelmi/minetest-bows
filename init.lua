@@ -165,10 +165,10 @@ controls.register_on_hold(function(player, key, time)
 	if wielditem:get_name()=="bow:bow" and inv:contains_item("main", "bow:arrow") then
 		player:set_physics_override({speed=0.25})
 		wielditem:set_name("bow:bow_1")
-		bow_load[player:get_player_name()]=os.clock()
-	elseif wielditem:get_name()=="bow:bow_1" and os.clock()-bow_load[player:get_player_name()]>charge_speed then
+		bow_load[player:get_player_name()]=os.time()
+	elseif wielditem:get_name()=="bow:bow_1" and os.time()-bow_load[player:get_player_name()]>charge_speed then
 		wielditem:set_name("bow:bow_2")
-	elseif wielditem:get_name()=="bow:bow_2" and os.clock()-bow_load[player:get_player_name()]>charge_speed*2 then
+	elseif wielditem:get_name()=="bow:bow_2" and os.time()-bow_load[player:get_player_name()]>charge_speed*2 then
 		wielditem:set_name("bow:bow_3")
 	end
 	player:set_wielded_item(wielditem)
